@@ -1,0 +1,91 @@
+<!-- the code CHAT GPT generated after seeing my code in C++ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 variables solving</title>
+</head>
+<body>
+    <h2>Solving 3x3 Linear Equations</h2>
+    
+    <p>Enter coefficients for the system of equations:</p>
+
+    <!-- Inputs for coefficients -->
+    <form id="equationForm">
+        <label>First equation: a1x + b1y + c1z = d1</label><br>
+        <input type="number" id="a1" placeholder="a1" required> x + 
+        <input type="number" id="b1" placeholder="b1" required> y + 
+        <input type="number" id="c1" placeholder="c1" required> z = 
+        <input type="number" id="d1" placeholder="d1" required><br><br>
+
+        <label>Second equation: a2x + b2y + c2z = d2</label><br>
+        <input type="number" id="a2" placeholder="a2" required> x + 
+        <input type="number" id="b2" placeholder="b2" required> y + 
+        <input type="number" id="c2" placeholder="c2" required> z = 
+        <input type="number" id="d2" placeholder="d2" required><br><br>
+
+        <label>Third equation: a3x + b3y + c3z = d3</label><br>
+        <input type="number" id="a3" placeholder="a3" required> x + 
+        <input type="number" id="b3" placeholder="b3" required> y + 
+        <input type="number" id="c3" placeholder="c3" required> z = 
+        <input type="number" id="d3" placeholder="d3" required><br><br>
+
+        <button type="button" onclick="solveEquations()">Solve</button>
+    </form>
+
+    <h3>Solution:</h3>
+    <p id="solution"></p>
+
+    <script>
+        // Function to calculate determinant of 3x3 matrix
+        function determinant(a1, b1, c1, a2, b2, c2, a3, b3, c3) {
+            return (a1 * ((b2 * c3) - (b3 * c2)) 
+                  - b1 * ((a2 * c3) - (a3 * c2)) 
+                  + c1 * ((a2 * b3) - (a3 * b2)));
+        }
+
+        // Function to solve the system of equations using Cramer's Rule
+        function solveEquations() {
+            // Getting values from the form inputs
+            let a1 = parseFloat(document.getElementById("a1").value);
+            let b1 = parseFloat(document.getElementById("b1").value);
+            let c1 = parseFloat(document.getElementById("c1").value);
+            let d1 = parseFloat(document.getElementById("d1").value);
+            let a2 = parseFloat(document.getElementById("a2").value);
+            let b2 = parseFloat(document.getElementById("b2").value);
+            let c2 = parseFloat(document.getElementById("c2").value);
+            let d2 = parseFloat(document.getElementById("d2").value);
+            let a3 = parseFloat(document.getElementById("a3").value);
+            let b3 = parseFloat(document.getElementById("b3").value);
+            let c3 = parseFloat(document.getElementById("c3").value);
+            let d3 = parseFloat(document.getElementById("d3").value);
+
+            // Main determinant D
+            let D = determinant(a1, b1, c1, a2, b2, c2, a3, b3, c3);
+
+            // Dx, Dy, Dz
+            let Dx = determinant(d1, b1, c1, d2, b2, c2, d3, b3, c3);
+            let Dy = determinant(a1, d1, c1, a2, d2, c2, a3, d3, c3);
+            let Dz = determinant(a1, b1, d1, a2, b2, d2, a3, b3, d3);
+
+            let solution = document.getElementById("solution");
+
+            // Checking if the system has a unique solution
+            if (D != 0) {
+                let x = Dx / D;
+                let y = Dy / D;
+                let z = Dz / D;
+                solution.innerHTML = `x = ${x.toFixed(2)}, y = ${y.toFixed(2)}, z = ${z.toFixed(2)}`;
+            } else {
+                if (Dx == 0 && Dy == 0 && Dz == 0) {
+                    solution.innerHTML = "The system has infinite solutions.";
+                } else {
+                    solution.innerHTML = "The system has no solution.";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
