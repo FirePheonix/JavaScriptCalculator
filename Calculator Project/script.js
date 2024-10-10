@@ -25,12 +25,14 @@ buttonsArray.forEach(btn => { // from arrays to each variable form and put in di
         } else if (value === '2' && isChoosingVariables) {              // for 2 equations 2 variables
             mode = 2;
             equationsCount = 0; // Reset equation count
+            isChoosingVariables = false;
             string = 'Enter coefficients for Equation 1 (a,b,c):';
             display.value = string;
 
         } else if (value === '3' && isChoosingVariables) {          // for 3 equations 3 variables
             mode = 3;
             equationsCount = 0;                     // Reset equation count
+            isChoosingVariables = false;
             string = 'Enter coefficients for Equation 1 (a,b,c,d):';
             display.value = string;
 
@@ -127,15 +129,18 @@ function calculateFunctions(func) {
 }
 
 function processEquations() {
-    exp = ""
+    
     const inputs = exp.split(' ').map(num => parseFloat(num));
     console.log(inputs)
     coefficients.push(inputs); // Add the inputted coefficients to the array
+    exp = "";
 
     equationsCount++;
+
     string = `Enter coefficients for Equation ${equationsCount + 1} (a,b,c${mode === 3 ? ',d' : ''}):`;
     display.value = string + exp;
     console.log(coefficients);
+    
     // If all equations are entered, solve the equations
     if ((mode === 2 && equationsCount === 2) || (mode === 3 && equationsCount === 3)) {
         solveEquations();
